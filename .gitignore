@@ -1,0 +1,5 @@
+tags
+*.o
+kzload
+kzload.elf
+kzload.mot
