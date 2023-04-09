@@ -19,7 +19,7 @@ static int init(void) {
 	extern int erodata, data_start, edata, bss_start, ebss;
 
 
-	/* 
+	/*
 	 * Initialize .data/.bss on *RAM* to allow writing variable.
 	 */
 
