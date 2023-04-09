@@ -51,7 +51,13 @@ $(TARGET).mot: $(TARGET)
 image: $(TARGET).mot
 
 write: $(TARGET).mot
+	@echo "dip switch must be: ON ON OFF ON"
 	$(H8WRITE) -3069 -f20 $(TARGET).mot $(H8RITE_SERDEV)
+
+minicom:
+	@echo "dip switch must be: ON OFF ON OFF"
+	@sleep 1.5
+	sudo minicom -D /dev/ttyUSB0 -b 9600 -8
 
 clean:
 	rm -f $(OBJS) $(TARGET) $(TARGET).elf $(TARGET).mot
