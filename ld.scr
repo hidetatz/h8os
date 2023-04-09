@@ -3,27 +3,26 @@ OUTPUT_ARCH(h8300h)
 ENTRY("_start")
 
 /*
-  In H8/3069F, the memory mapping looks like this:
-  0x000000┌──────────────────┐
-          │ interrupt vector │
-  0x0000ff├──────────────────┤
-          │                  │
-          │                  │
-          │    rom (512KB)   │
-          │                  │
-          │                  │
-  0x07ffff├──────────────────┤
-          ·                  ·
-          ·                  ·
-  0xffbf20├──────────────────┤
-          │                  │
-          │    ram  (16KB)   │
-          │                  │
-  0xffff1f└──────────────────┘
-  0xffff20┌──────────────────┐
-          │   I/O register   │
-  0xffffe9└──────────────────┘
-
+ * In H8/3069F, the memory mapping looks like this:
+ * 0x000000┌──────────────────┐
+ *         │ interrupt vector │
+ * 0x0000ff├──────────────────┤
+ *         │                  │
+ *         │                  │
+ *         │    rom (512KB)   │
+ *         │                  │
+ *         │                  │
+ * 0x07ffff├──────────────────┤
+ *         ·                  ·
+ *         ·                  ·
+ * 0xffbf20├──────────────────┤
+ *         │                  │
+ *         │    ram  (16KB)   │
+ *         │                  │
+ * 0xffff1f└──────────────────┘
+ * 0xffff20┌──────────────────┐
+ *         │   I/O register   │
+ * 0xffffe9└──────────────────┘
 */
 
 MEMORY
