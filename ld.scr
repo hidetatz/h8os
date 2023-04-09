@@ -32,6 +32,7 @@ MEMORY
 	rom(rx)		: org = 0x000100, len = 0x07ff00
 
 	ramall(rx)	: org = 0xffbf20, len = 0x004000 /* 16KB */
+	buffer(rwx)	: org = 0xffdf20, len = 0x001d00 /* 8KB */
 	data(rx)	: org = 0xfffc20, len = 0x000300
 	stack(rx)	: org = 0xffff00, len = 0x000000 /* end of RAM */
 }
@@ -56,6 +57,10 @@ SECTIONS
 		*(.rodata.*)
 		_erodata = . ;
 	} > rom
+
+	.buffer : {
+		_buffer_start = . ;
+	} > buffer
 
 	/*
 	 * To allow write on static variable in OS code, the actual data must locate on
