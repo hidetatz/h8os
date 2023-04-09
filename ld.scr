@@ -2,30 +2,86 @@ OUTPUT_FORMAT("elf32-h8300")
 OUTPUT_ARCH(h8300h)
 ENTRY("_start")
 
+/*
+  In H8/3069F, the memory mapping looks like this:
+  0x000000┌──────────────────┐
+          │ interrupt vector │
+  0x0000ff├──────────────────┤
+          │                  │
+          │                  │
+          │    rom (512KB)   │
+          │                  │
+          │                  │
+  0x07ffff├──────────────────┤
+          ·                  ·
+          ·                  ·
+  0xffbf20├──────────────────┤
+          │                  │
+          │    ram  (16KB)   │
+          │                  │
+  0xffff1f└──────────────────┘
+  0xffff20┌──────────────────┐
+          │   I/O register   │
+  0xffffe9└──────────────────┘
+
+*/
+
+MEMORY
+{
+	romall(rx)	: org = 0x000000, len = 0x080000 /* 512KB */
+	vectors(r)	: org = 0x000000, len = 0x000100 /* top of ROM */
+	rom(rx)		: org = 0x000100, len = 0x07ff00
+
+	ramall(rx)	: org = 0xffbf20, len = 0x004000 /* 16KB */
+	data(rx)	: org = 0xfffc20, len = 0x000300
+	stack(rx)	: org = 0xffff00, len = 0x000000 /* end of RAM */
+}
+
 SECTIONS
 {
-	. = 0x0;
-
 	.vectors : {
 		vector.o(.data)
-	}
+	} > vectors
 
 	.text : {
+		/* symbol defined to get section address from c code. */
+		_text_start = . ;
 		*(.text)
-	}
+		_etext = . ;
+	} > rom
 
 	.rodata : {
+		_rodata_start = . ;
 		*(.strings)
 		*(.rodata)
 		*(.rodata.*)
-	}
+		_erodata = . ;
+	} > rom
 
+	/*
+	 * To allow write on static variable in OS code, the actual data must locate on
+	 * RAM, while the data section itself must be at ROM.
+	 * To achieve this, specify "AT> rom" to tell linker the data section's physical address
+	 * must be on rom.
+	 * The same applies to bss.
+	 */
 	.data : {
+		_data_start = . ;
 		*(.data)
-	}
+		_edata = . ;
+	} > data AT> rom
 
 	.bss : {
+		_bss_start = . ;
 		*(.bss)
 		*(COMMON)
-	}
+		_ebss = . ;
+	} > data AT> rom
+
+	. = ALIGN(4);
+	_end = . ;
+
+	.stack : {
+		_stack = . ;
+	} > stack
 }
