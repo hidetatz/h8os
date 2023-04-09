@@ -18,6 +18,29 @@ int puts(unsigned char *str) {
 	return 0;
 }
 
+
+// get a character
+unsigned char getc(void) {
+	unsigned char c = serial_recv_byte(SERIAL_DEFAULT_DEVICE);
+	c = (c == '\r') ? '\n' : c;
+	putc(c); // echo back. show a typed character on console
+	return c;
+}
+
+// get a string
+int gets(unsigned char *buf) {
+	int i = 0;
+	unsigned char c;
+	do {
+		c = getc();
+		if (c == '\n')
+			c = '\0'; // trim new line, and exit the loop as '\0' is considered as false.
+		buf[i++] = c;
+	} while(c);
+
+	return i - 1;
+}
+
 void *memset(void *b, int c, long len) {
 	char *p;
 	for (p = b; len > 0; len--)

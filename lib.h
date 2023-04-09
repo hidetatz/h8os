@@ -9,6 +9,10 @@
 int putc(unsigned char c);
 // put a string
 int puts(unsigned char *str);
+// get a character
+unsigned char getc(void);
+// get a string
+int gets(unsigned char *buf);
 
 /*
  * utilities
