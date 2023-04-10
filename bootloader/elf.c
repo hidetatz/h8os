@@ -64,26 +64,24 @@ static int elf_load_program(struct elf_header *header) {
 		if (phdr->type != 1) // LOAD
 			continue;
 
-		putxval(phdr->offset,        6); puts(" ");
-		putxval(phdr->virtual_addr,  6); puts(" ");
-		putxval(phdr->physical_addr, 6); puts(" ");
-		putxval(phdr->file_size,     6); puts(" ");
-		putxval(phdr->memory_size,   6); puts(" ");
-		putxval(phdr->flags,         6); puts(" ");
-		putxval(phdr->align,         6); puts("\n");
+		// Load the segment on memory
+		memcpy((char *)phdr->physical_addr, (char *)header + phdr->offset, phdr->file_size);
+		// Put zero padding if phdr->file_size < phdr->memory_size.
+		// This is needed to zero clear the bss in case the .data and .bss are included in a single segment.
+		memset((char *)phdr->physical_addr + phdr->file_size, 0, phdr->memory_size - phdr->file_size);
 	}
 
 	return 0;
 }
 
-int elf_load(char *buf) {
+char *elf_load(char *buf) {
 	struct elf_header *header = (struct elf_header *) buf;
 
 	if (elf_check(header) < 0)
-		return -1;
+		return NULL;
 
 	if (elf_load_program(header) < 0)
-		return -1;
+		return NULL;
 
-	return 0;
+	return (char *)header->entry_point;
 }

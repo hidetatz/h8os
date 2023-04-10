@@ -61,11 +61,13 @@ int main(void) {
 	static char buf[16];
 	static long size = -1;
 	static unsigned char *loadbuf = NULL;
+	char *entrypoint;
+	void (*f) (void);
 	extern int buffer_start; // defined in linker script
 
 	init();
 
-	puts("k8os boot loader started.\n");
+	puts("h8os boot loader started.\n");
 	
 	while(1) {
 		puts("bootloader> ");
@@ -86,7 +88,17 @@ int main(void) {
 			puts("\n");
 			dump(loadbuf, size);
 		} else if (!strcmp(buf, "run")) {
-			elf_load(loadbuf);
+			entrypoint = elf_load(loadbuf);
+			if (!entrypoint) {
+				puts("run error!\n");
+			} else {
+				puts("starting from entrypoint: ");
+				putxval((unsigned long)entrypoint, 0);
+				puts("\n");
+				f = (void (*)(void))entrypoint;
+				f();
+				// never gets back here
+			}
 		} else {
 			puts("unknown.\n");
 		}
