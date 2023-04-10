@@ -1,5 +1,6 @@
 tags
 *.o
-kzload
-kzload.elf
-kzload.mot
+os
+bl
+*.elf
+*.mot
