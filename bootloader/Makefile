@@ -13,7 +13,7 @@ OBJDUMP = $(BINDIR)/$(ADDNAME)objdump
 RANLIB  = $(BINDIR)/$(ADDNAME)ranlib
 STRIP   = $(BINDIR)/$(ADDNAME)strip
 
-H8WRITE = ./tools/h8write/h8write
+H8WRITE = ../tools/h8write/h8write
 
 OBJS = vector.o startup.o main.o
 OBJS += lib.o serial.o xmodem.o elf.o
