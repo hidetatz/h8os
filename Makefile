@@ -16,7 +16,7 @@ STRIP   = $(BINDIR)/$(ADDNAME)strip
 H8WRITE = ./tools/h8write/h8write
 
 OBJS = vector.o startup.o main.o
-OBJS += lib.o serial.o xmodem.o
+OBJS += lib.o serial.o xmodem.o elf.o
 
 H8RITE_SERDEV = /dev/ttyUSB0
 
