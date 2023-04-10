@@ -1,4 +1,4 @@
-#include "defines.h"
+#include "../util/defines.h"
 #include "serial.h"
 #include "lib.h"
 #include "xmodem.h"

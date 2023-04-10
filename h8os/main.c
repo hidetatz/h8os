@@ -2,7 +2,7 @@
  * h8os.
  */
 
-#include "defines.h"
+#include "../util/defines.h"
 #include "serial.h"
 #include "lib.h"
 

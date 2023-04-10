@@ -2,7 +2,7 @@
  * h8os bootloader.
  */
 
-#include "defines.h"
+#include "../util/defines.h"
 #include "serial.h"
 #include "xmodem.h"
 #include "elf.h"
