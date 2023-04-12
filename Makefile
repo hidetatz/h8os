@@ -12,4 +12,4 @@ minicom:
 
 clean:
 	+$(MAKE) -C bootloader clean
-	+$(MAKE) -C h8os clean
+	+$(MAKE) -C os clean
