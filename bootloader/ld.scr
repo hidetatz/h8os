@@ -28,10 +28,14 @@ ENTRY("_start")
 MEMORY
 {
 	romall(rx)	: org = 0x000000, len = 0x080000 /* 512KB */
+	/* vector table defined in hardware (H8/3069) side */
 	vectors(r)	: org = 0x000000, len = 0x000100 /* top of ROM */
 	rom(rx)		: org = 0x000100, len = 0x07ff00
 
 	ramall(rx)	: org = 0xffbf20, len = 0x004000 /* 16KB */
+	/* vector table defined in software (os) side */
+	softvec(rw)	: org = 0xffbf20, len = 0x000040
+	/* buffer to store os code */
 	buffer(rwx)	: org = 0xffdf20, len = 0x001d00 /* 8KB */
 	data(rx)	: org = 0xfffc20, len = 0x000300
 	stack(rx)	: org = 0xffff00, len = 0x000000 /* end of RAM */
@@ -39,6 +43,10 @@ MEMORY
 
 SECTIONS
 {
+	/*
+	 * ROM
+	 */
+
 	.vectors : {
 		vector.o(.data)
 	} > vectors
@@ -57,6 +65,14 @@ SECTIONS
 		*(.rodata.*)
 		_erodata = . ;
 	} > rom
+
+	/*
+	 * RAM
+	 */
+
+	.softvec : {
+		_softvec = . ;
+	} > softvec
 
 	.buffer : {
 		_buffer_start = . ;

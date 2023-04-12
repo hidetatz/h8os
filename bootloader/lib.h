@@ -1,5 +1,5 @@
-#ifndef H8OS_LIB_H_
-#define H8OS_LIB_H_
+#ifndef H8OS_BOOTLOADER_LIB_H_
+#define H8OS_BOOTLOADER_LIB_H_
 
 /*
  * for serial
@@ -27,4 +27,4 @@ int strcmp(const char *s1, const char *s2);
 int strncmp(const char *s1, const char *s2, int len);
 int putxval(unsigned long value, int column);
 
-#endif // H8OS_LIB_H_
+#endif // H8OS_BOOTLOADER_LIB_H_

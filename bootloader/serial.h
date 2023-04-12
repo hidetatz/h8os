@@ -1,5 +1,5 @@
-#ifndef H8OS_SERIAL_H_
-#define H8OS_SERIAL_H_
+#ifndef H8OS_BOOTLOADER_SERIAL_H_
+#define H8OS_BOOTLOADER_SERIAL_H_
 
 // initialize serial device
 int serial_init(int index);
@@ -16,4 +16,4 @@ int serial_is_recv_enable(int index);
 // receive a byte
 unsigned char serial_recv_byte(int index);
 
-#endif // H8OS_SERIAL_H_
+#endif // H8OS_BOOTLOADER_SERIAL_H_

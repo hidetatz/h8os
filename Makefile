@@ -1,6 +1,6 @@
 all:
 	+$(MAKE) -C bootloader
-	+$(MAKE) -C h8os
+	+$(MAKE) -C os
 
 write:
 	+$(MAKE) -C bootloader write

@@ -2,16 +2,16 @@
  * h8os bootloader.
  */
 
-#include "../util/defines.h"
+#include "util.h"
 #include "serial.h"
 #include "xmodem.h"
+#include "interrupt.h"
 #include "elf.h"
 #include "lib.h"
 
 static int init(void) {
 	// defined in linker script
 	extern int erodata, data_start, edata, bss_start, ebss;
-
 
 	/*
 	 * Initialize .data/.bss on *RAM* to allow writing variable.
@@ -22,6 +22,8 @@ static int init(void) {
 
 	// write 0 on bss on RAM.
 	memset(&bss_start, 0, (long)&ebss - (long)&bss_start);
+
+	softvec_init();
 
 	serial_init(SERIAL_DEFAULT_DEVICE);
 
@@ -65,6 +67,7 @@ int main(void) {
 	void (*f) (void);
 	extern int buffer_start; // defined in linker script
 
+	INTR_DISABLE;
 	init();
 
 	puts("h8os boot loader started.\n");

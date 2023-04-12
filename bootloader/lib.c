@@ -1,4 +1,4 @@
-#include "../util/defines.h"
+#include "util.h"
 #include "serial.h"
 #include "lib.h"
 

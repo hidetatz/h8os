@@ -16,7 +16,7 @@ STRIP   = $(BINDIR)/$(ADDNAME)strip
 H8WRITE = ../tools/h8write/h8write
 
 OBJS = vector.o startup.o main.o
-OBJS += lib.o serial.o xmodem.o elf.o
+OBJS += lib.o serial.o xmodem.o elf.o interrupt.o intr.o
 
 H8RITE_SERDEV = /dev/ttyUSB0
 
@@ -31,6 +31,7 @@ LFLAGS = -static -T ld.scr -L.
 
 .SUFFIXES: .c .o
 .SUFFIXES: .s .o
+.SUFFIXES: .S .o
 
 all: $(TARGET)
 	
@@ -43,6 +44,9 @@ $(TARGET): $(OBJS) ld.scr
 	$(CC) -c $(CFLAGS) $<
 
 .s.o: $<
+	$(CC) -c $(CFLAGS) $<
+
+.S.o: $<
 	$(CC) -c $(CFLAGS) $<
 
 $(TARGET).mot: $(TARGET)
