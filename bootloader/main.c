@@ -15,6 +15,7 @@ static int init(void) {
 
 	/*
 	 * Initialize .data/.bss on *RAM* to allow writing variable.
+	 * Memories for data/bss are already reserved by linker script.
 	 */
 
 	// copy .data from ROM to RAM. erodata is on ROM, data_start is on RAM.
