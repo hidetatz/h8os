@@ -1,6 +1,6 @@
 tags
 *.o
-os
-bl
+os/os
+bootloader/bl
 *.elf
 *.mot
